@@ -1,0 +1,24 @@
+{% extends 'base.html'%}
+{% load static %}
+
+
+{% block contents %}
+
+           <form action="/comment/register/{{post.id}}" method="post" id="contactForm" data-sb-form-api-token="API_TOKEN">
+                {% csrf_token %}
+
+                <div class="form-floating">
+                    <input name="nickname" class="form-control" id="nickname" type="text"/>
+                    <label for="nickname">닉네임</label>
+                </div>
+                <div class="form-floating">
+                    <input name="contents" class="form-control" id="contents" type="text"/>
+                    <label for="contents">댓글 내용</label>
+                </div>
+
+                <br/>
+                <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">댓글달기</button>
+            </form>
+
+
+{% endblock %}

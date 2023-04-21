@@ -1,0 +1,49 @@
+{% extends 'base.html'%}
+{% load static %}
+
+
+{% block contents %}
+
+        <!-- Page Header-->
+        <header class="masthead" style="background-image: url('{% static 'assets/img/blue.png' %}')">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="page-heading">
+                            <h1> UPLOAD </h1>
+                            <span class="subheading"> 이미지 업로드시, 관련 이름을 꼭 입력해주세요 </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main Content-->
+        <!-- Main Content-->
+        <main class="mb-4">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="my-5">
+                           <form method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="form-floating">
+                                    <input class="form-control" id="image_title" type="text" placeholder="제목을 입력해주세요." name="image_title" value="{{ post.image_title }}"
+                                            data-sb-validations="required">
+                                    <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                                    <label for="image_title"> Title </label>
+                                </div>
+                                <br>
+                                <div class="form-floating">
+                                    <input class="form-control" type="file" name="image" id="image">
+                                </div>
+                                <br>
+
+                                <button class="btn btn-primary" id="submitButton" type="submit"> UPLOAD </button>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block contents %}
+
+<section class="page-section bg-light" id="portfolio">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase"> IMAGE </h2>
+        </div>
+        <div >
+            <a class="btn btn-primary" href="/upload" style="float:left"> UPLOAD </a>
+            <form action="" method='GET'>
+                <div class="row" style="margin-bottom:15px;">
+                    <div class="col-lg-5">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="search_key" value="{{ search_key }}"
+                                placeholder="looking for...">
+                            <span class="input-group-btn">
+                                <input class="btn btn-default" type="submit" value="Search">
+                            </span>
+                        </div><!-- /input-group -->
+                    </div><!-- /.col-lg-6 -->
+                </div><!-- /.row -->
+            </form>
+        </div>
+         <br/>
+        <br/>
+        <div class="row">
+
+         {% if posts %}
+            {% for post in posts %}
+                <div class="col-lg-4 col-sm-6 mb-4">
+                    <!-- Portfolio item 1-->
+                    <div class="portfolio-item">
+                        <a class="portfolio-link" href="/view/{{ post.id }}">
+                            <img class="img-fluid d-block mx-auto" src="{{ post.image.url }}" alt="...">
+                        </a>
+                    </div>
+                    {% for post in list_image %}
+                        <div class="portfolio-item">
+                            <a class="portfolio-link" href="/view/{{ post.id }}">
+                                <img class="img-fluid d-block mx-auto" src="{{ post.image.url }}" alt="...">
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+         {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

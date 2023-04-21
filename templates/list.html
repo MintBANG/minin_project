@@ -1,0 +1,84 @@
+{% extends 'base.html'%}
+{% load static %}
+
+
+{% block contents %}
+<section class="page-section bg-light" id="portfolio">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase"> LOOK OTHERS REVIEW </h2>
+        </div>
+        <div class="row">
+         {% if posts %}
+            {% for post in posts %}
+
+
+            <div class="col-lg-4 col-sm-6 mb-4">
+                <!-- Portfolio item 1-->
+                <div class="portfolio-item">
+                    <a class="portfolio-link" href="/post/{{ post.id }}">
+                        {% if post.image %}
+                        <img class="img-fluid d-block mx-auto" src="{{ post.image.url }}"
+                                     alt="...">
+                        {% else %}
+                        <img class="img-fluid d-block mx-auto" src="{% static 'assets/img/doctorwho.png' %}" alt="..."/>
+                        {% endif %}
+                    </a>
+                    <div class="portfolio-caption">
+                        <div class="portfolio-caption-heading">{{ post.title }}</div>
+                        <div class="portfolio-caption-subheading text-muted">{{ post.writer.user_id }}</div>
+
+                        <p>
+                            <span onclick="likeAjax({{post.id}}, this)"
+                                  class="likebtn" style="cursor: pointer">
+                                {% if user in result.like.all %}
+                                    ♥
+                                {% else %}
+                                    ♡
+                                {% endif %}
+                            </span>
+                            <span> 좋아요 {{ post.like.count }}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+
+           <script>
+                function likeAjax(bid,event) {
+                var httpRequest = new XMLHttpRequest();
+                httpRequest.onreadystatechange = function() {
+                    if (httpRequest.readyState == XMLHttpRequest.DONE
+                            && httpRequest.status == 200) {
+                            var json = JSON.parse(httpRequest.responseText);
+                            if (json['message']=='add like') {
+                                event.innerText = "♥";
+                                event.nextSibling.nextSibling.innerText = json['like_cnt'];
+                            } else if (json['message']=='del like') {
+                                event.innerText = "♡";
+                                event.nextSibling.nextSibling.innerText = json['like_cnt'];
+                            }
+                    }
+                };
+                httpRequest.open("GET", "/like/"+bid, true);
+                httpRequest.send();
+            }
+
+            function sendAjax() {
+                var httpRequest = new XMLHttpRequest();
+                httpRequest.onreadystatechange = function() {
+                    if (httpRequest.readyState == XMLHttpRequest.DONE
+                            && httpRequest.status == 200) {
+                            console.log(httpRequest.responseText);
+                    }
+                };
+                httpRequest.open("GET", "/read_list", true);
+                httpRequest.send();
+            }
+            </script>
+
+        </div>
+    </div>
+</section>
+{% endblock %}
